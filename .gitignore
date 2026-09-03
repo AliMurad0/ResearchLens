@@ -1,0 +1,19 @@
+# ---- Backend (Python) ----
+backend/venv/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/*.pyc
+backend/.env
+backend/data/chroma_db/
+backend/data/outputs/
+
+# ---- Frontend (Node) ----
+researchlens-frontend/node_modules/
+researchlens-frontend/dist/
+researchlens-frontend/.env
+researchlens-frontend/*.local
+
+# ---- General ----
+.DS_Store
+*.log
+.vscode/

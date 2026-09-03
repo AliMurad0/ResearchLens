@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-paper: 251 249 244;
+    --color-paper-dim: 241 237 226;
+    --color-paper-line: 223 217 199;
+    --color-surface: 255 255 251;
+    --color-ink: 42 39 33;
+    --color-ink-soft: 90 86 74;
+    --color-ink-faint: 146 140 122;
+    --color-lamp: 122 94 42;
+    --color-lamp-light: 158 125 62;
+    --color-lamp-dark: 92 70 28;
+    --color-lamp-tint: 244 237 219;
+    --color-stamp: 156 90 66;
+    --color-stamp-tint: 243 226 216;
+  }
+
+  .dark {
+    --color-paper: 27 24 18;
+    --color-paper-dim: 35 31 23;
+    --color-paper-line: 59 53 39;
+    --color-surface: 41 36 27;
+    --color-ink: 237 229 210;
+    --color-ink-soft: 195 186 164;
+    --color-ink-faint: 140 131 110;
+    --color-lamp: 199 160 92;
+    --color-lamp-light: 217 184 128;
+    --color-lamp-dark: 158 125 62;
+    --color-lamp-tint: 46 39 26;
+    --color-stamp: 196 132 100;
+    --color-stamp-tint: 46 34 27;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-paper text-ink font-sans antialiased;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  ::selection {
+    background-color: rgb(var(--color-lamp));
+    color: rgb(var(--color-paper));
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--color-lamp));
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: rgb(var(--color-paper-line));
+    border-radius: 999px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  /* Subtle paper-grain texture so backgrounds don't read as flat/generated white */
+  .texture-grain {
+    position: relative;
+  }
+  .texture-grain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.03 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .dark .texture-grain::before {
+    mix-blend-mode: screen;
+    opacity: 0.4;
+  }
+
+  /* Lamp-glow: a soft green-tinted glow that grows on hover/focus,
+     evoking a desk lamp illuminating the page underneath the search bar */
+  .lamp-glow {
+    transition: box-shadow 0.35s ease;
+  }
+  .lamp-glow:hover,
+  .lamp-glow:focus-within {
+    box-shadow: 0 12px 50px -6px rgb(var(--color-lamp) / 0.28);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
