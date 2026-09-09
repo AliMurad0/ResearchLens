@@ -27,7 +27,7 @@ NOT_STATED = "not stated in abstract"
 # A smaller/faster model is enough for structured extraction -- this
 # isn't creative synthesis, it's pattern-matching against a fixed
 # schema, so there's no need to pay for the 70B model here.
-EXTRACTION_MODEL = "llama-3.1-8b-instant"
+EXTRACTION_MODEL = "openai/gpt-oss-20b"
 
 
 def build_extraction_prompt(chunks: list[dict]) -> str:

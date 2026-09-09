@@ -27,29 +27,30 @@ function findMatchingPaper(parenText, papers) {
 export function parseCitations(text, papers) {
   const parenRegex = /\([^()]{3,100}\)/g;
   const segments = [];
-  let lastIndex = 0;
+  let bufferStart = 0;
   let match;
 
   while ((match = parenRegex.exec(text)) !== null) {
     const full = match[0];
     const start = match.index;
-
-    if (start > lastIndex) {
-      segments.push({ type: "text", content: text.slice(lastIndex, start) });
-    }
-
     const paper = findMatchingPaper(full, papers);
-    if (paper) {
-      segments.push({ type: "citation", content: full, paperId: paper.id });
-    } else {
-      segments.push({ type: "text", content: full });
-    }
 
-    lastIndex = start + full.length;
+    // Only a REAL match creates a segment boundary. A parenthetical
+    // that isn't a citation -- e.g. "(TNT)" -- is left right where it
+    // is, merged with the surrounding text, so it can't fracture a
+    // "**bold span (TNT)**" that happens to contain it into two
+    // disconnected halves.
+    if (paper) {
+      if (start > bufferStart) {
+        segments.push({ type: "text", content: text.slice(bufferStart, start) });
+      }
+      segments.push({ type: "citation", content: full, paperId: paper.id });
+      bufferStart = start + full.length;
+    }
   }
 
-  if (lastIndex < text.length) {
-    segments.push({ type: "text", content: text.slice(lastIndex) });
+  if (bufferStart < text.length) {
+    segments.push({ type: "text", content: text.slice(bufferStart) });
   }
 
   return segments;

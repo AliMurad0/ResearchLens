@@ -158,6 +158,7 @@ that endpoint doesn't exist on the backend yet (see below).
 
 ## Project structure
 
+
 ```
 src/
   lib/           mock data, api.js (the one file to edit), citation

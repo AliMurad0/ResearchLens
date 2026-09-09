@@ -42,7 +42,7 @@ def generate_literature_review(topic: str, max_results: int = 30, top_k: int = 1
     if not chunks:
         raise ValueError("No relevant papers found to generate a review from.")
 
-    model = "llama-3.1-8b-instant" if fast_mode else "llama-3.3-70b-versatile"
+    model = "openai/gpt-oss-20b" if fast_mode else "openai/gpt-oss-120b"
     max_tokens = 1500 if fast_mode else 3000
 
     review_text, tokens_used = generate_review_text(topic, chunks, model=model, max_tokens=max_tokens)
