@@ -157,18 +157,3 @@ that endpoint doesn't exist on the backend yet (see below).
   your server instead.
 
 ## Project structure
-
-
-```
-src/
-  lib/           mock data, api.js (the one file to edit), citation
-                 formatting, citation-text parsing, localStorage helpers
-  hooks/         useHistory — history + projects state
-  components/
-    Landing/     hero screen + the CSS 3D ribbon animation
-    Shell/       sidebar, sticky tab bar, app shell
-    Search/      topic input, filters, loading state, review renderer
-    Preview/     paper list, hover-preview card, citation block
-    Insights/    compare topics, trends, gap score
-    icons/       the app's custom icon set
-```
