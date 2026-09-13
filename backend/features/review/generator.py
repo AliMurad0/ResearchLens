@@ -20,29 +20,28 @@ def build_review_prompt(topic: str, chunks: list[dict]) -> str:
 
 Using ONLY the research excerpts below, write a thorough literature review with these sections:
 
-1. Introduction — context and why this topic matters
-2. Key Themes — group and discuss the main ideas across sources, in depth
-3. Points of Agreement and Disagreement — where sources align or conflict
-4. Research Gaps — what's missing or under-explored
-5. Conclusion — synthesis and outlook
+1. Introduction
+2. Key Themes
+3. Points of Agreement and Disagreement
+4. Research Gaps
+5. Conclusion
 
-FORMATTING RULES (follow exactly — this output is parsed by code):
-- Every section heading MUST be on its own line, written as Markdown: "## 1. Introduction", "## 2. Key Themes", etc.
-- Leave one blank line before and after every heading.
-- Leave one blank line between paragraphs.
-- Never write a section title as bold text inline within a paragraph. Bold/italic are only for occasional emphasis of a specific term within a sentence.
+Rules:
+- Output each main section heading on its own line.
+- Output each subsection heading on its own line.
+- Use numbered headings exactly like:
+  1. Introduction
+  2. Key Themes
+  2.1 First Subtheme
+  2.2 Second Subtheme
+  3. Points of Agreement and Disagreement
+  4. Research Gaps
+  5. Conclusion
+- Never put a heading on the same line as paragraph text.
+- Leave one blank line between headings and paragraphs.
 - When referencing a specific finding, cite it in-text like (Author, Year) using the source's actual author/year given below
 - Do not invent facts, authors, or findings not present in the excerpts
-- Write in formal academic prose, in full paragraphs, not bullet points
-
-Example of correctly formatted output:
-## 1. Introduction
-
-Paragraph text goes here, in full prose...
-
-## 2. Key Themes
-
-Next paragraph text here...
+- Write in formal academic prose, not bullet points
 
 EXCERPTS:
 {excerpts}"""
