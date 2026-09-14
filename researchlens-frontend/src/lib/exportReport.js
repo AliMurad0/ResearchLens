@@ -244,6 +244,54 @@ export function exportReportAsPDF(result) {
   doc.save(fileName(result.topic, "pdf"));
 }
 
+// ------------------------------------------------------------
+// MARKDOWN EXPORT
+// ------------------------------------------------------------
+
+export function exportReportAsMarkdown(result) {
+  const papersScanned =
+    result.papers_scanned ??
+    result.max_results ??
+    "N/A";
+
+  const parts = [];
+
+  parts.push(`# Literature Review: ${result.topic}`);
+  parts.push("");
+  parts.push(
+    `_Literature review - used ${result.sources_used} of ${papersScanned} papers scanned_`
+  );
+  parts.push("");
+  parts.push(result.review_text.trim());
+  parts.push("");
+  parts.push("## References");
+  parts.push("");
+
+  const references = result.references ?? [];
+
+  if (references.length === 0) {
+    parts.push("_No references were returned for this review._");
+  } else {
+    references.forEach((paper, index) => {
+      parts.push(`${index + 1}. ${formatAPA(paper)}`);
+    });
+  }
+
+  const markdown = parts.join("\n");
+
+  const blob = new Blob([markdown], { type: "text/markdown;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = fileName(result.topic, "md");
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+
+  URL.revokeObjectURL(url);
+}
+
 function fileName(topic, ext) {
   return `${topic
     .replace(/[^\w\s-]/g, "")
