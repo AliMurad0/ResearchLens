@@ -16,7 +16,8 @@ import {
   mockCompareTopics,
 } from "./mockData";
 
-export const BACKEND_URL = "http://localhost:8000";
+export const BACKEND_URL =
+import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
 const USE_MOCK_DATA = false;
 
 const NETWORK_DELAY_MS = 900;
